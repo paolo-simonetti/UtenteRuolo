@@ -30,6 +30,7 @@ public class ArticoloDAOImpl extends AbstractMySQLDAO implements ArticoloDAO {
 				articoloTemp.setDescrizione(rs.getString("DESCRIZIONE"));
 				articoloTemp.setPrezzo(rs.getInt("PREZZO"));
 				articoloTemp.setId(rs.getLong("ID"));
+				articoloTemp.setCategoriaFK(rs.getLong("CATEGORIA_FK"));
 				result.add(articoloTemp);
 			}
 
@@ -55,6 +56,7 @@ public class ArticoloDAOImpl extends AbstractMySQLDAO implements ArticoloDAO {
 					result.setCodice(resultSet.getString("CODICE"));
 					result.setPrezzo(resultSet.getInt("PREZZO"));
 					result.setDescrizione(resultSet.getString("DESCRIZIONE"));
+					result.setCategoriaFK(resultSet.getLong("CATEGORIA_FK"));
 				} else {
 					result=null;
 				}
@@ -73,12 +75,13 @@ public class ArticoloDAOImpl extends AbstractMySQLDAO implements ArticoloDAO {
 			return -1;
 		} else {
 			int result=0;
-			String query="UPDATE articolo SET PREZZO=?,DESCRIZIONE=?,CODICE=? WHERE ID=?";
+			String query="UPDATE articolo SET PREZZO=?,DESCRIZIONE=?,CODICE=?, CATEGORIA_FK=? WHERE ID=?";
 			try (PreparedStatement preparedStatement=connection.prepareStatement(query)) {
 				preparedStatement.setInt(1,input.getPrezzo());
 				preparedStatement.setString(2,input.getDescrizione());
 				preparedStatement.setString(3,input.getCodice());
-				preparedStatement.setLong(4,input.getId());
+				preparedStatement.setLong(4,input.getCategoriaFK());
+				preparedStatement.setLong(5,input.getId());
 				result= preparedStatement.executeUpdate();
 			} catch(SQLException e) {
 				e.printStackTrace();
@@ -88,19 +91,25 @@ public class ArticoloDAOImpl extends AbstractMySQLDAO implements ArticoloDAO {
 	}
 
 	@Override
-	public int insert(Articolo input) throws Exception {
+	public Long insert(Articolo input) throws Exception {
 		if (isNotActive() || input == null) {
-			return -1;
+			return -1L;
 		}
-
-		int result = 0;
-
-		try (PreparedStatement ps = connection
-				.prepareStatement("INSERT INTO articolo (codice, descrizione, prezzo) VALUES (?, ?, ?);")) {
-			ps.setString(1, input.getCodice());
+		Long result = 0L;
+		try (PreparedStatement ps = connection.prepareStatement("INSERT INTO articolo (PREZZO, DESCRIZIONE, CODICE, CATEGORIA_FK) "
+				+ "VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS)) {
+			ps.setInt(1, input.getPrezzo());
 			ps.setString(2, input.getDescrizione());
-			ps.setInt(3, input.getPrezzo());
-			result = ps.executeUpdate();
+			ps.setString(3, input.getCodice());
+			ps.setLong(4,input.getCategoriaFK());
+			ps.executeUpdate();
+			ResultSet resultSet=ps.getGeneratedKeys();
+			if (resultSet.next()) {
+				input.setId(resultSet.getLong(1));
+				result=input.getId();
+			} else {
+				System.err.println("Generated Keys non trovate per insertArticolo");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -114,11 +123,12 @@ public class ArticoloDAOImpl extends AbstractMySQLDAO implements ArticoloDAO {
 			return -1;
 		} else {
 			int result=0;
-			String query="DELETE FROM articolo WHERE PREZZO=? AND DESCRIZIONE=? AND CODICE=?";
+			String query="DELETE FROM articolo WHERE PREZZO=? AND DESCRIZIONE=? AND CODICE=? AND CATEGORIA_FK=?";
 			try (PreparedStatement preparedStatement=connection.prepareStatement(query)) {
 				preparedStatement.setInt(1,input.getPrezzo());
 				preparedStatement.setString(2,input.getDescrizione());
 				preparedStatement.setString(3,input.getCodice());
+				preparedStatement.setLong(4,input.getCategoriaFK());
 				result= preparedStatement.executeUpdate();
 			} catch(SQLException e) {
 				e.printStackTrace();

@@ -11,7 +11,7 @@ public interface IBaseDAO<T> {
 
 	public int update(T input) throws Exception;
 
-	public int insert(T input) throws Exception;
+	public Long insert(T input) throws Exception;
 
 	public int delete(T input) throws Exception;
 

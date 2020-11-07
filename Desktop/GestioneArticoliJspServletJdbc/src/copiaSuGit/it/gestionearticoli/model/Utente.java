@@ -4,6 +4,7 @@ import java.util.TreeMap;
 
 public class Utente implements Comparable<Utente> {
 	
+	private Long idUtente;
 	private String nome, cognome, codiceFiscale, username, password;
 	private Ruolo ruolo;
 	
@@ -23,6 +24,14 @@ public class Utente implements Comparable<Utente> {
 		}
 		
 		public static TreeMap<String,Ruolo> conversioneRuolo=new TreeMap<>(); // quando creo nuove tipologie di utenti, le metto qui 
+	}
+
+	public Long getIdUtente() {
+		return idUtente;
+	}
+
+	public void setIdUtente(Long idUtente) {
+		this.idUtente = idUtente;
 	}
 
 	public String getCognome() {

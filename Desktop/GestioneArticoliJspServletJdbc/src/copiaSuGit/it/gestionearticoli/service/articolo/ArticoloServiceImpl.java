@@ -45,7 +45,6 @@ public class ArticoloServiceImpl implements ArticoloService {
 			throw e;
 		}
 		return result;
-
 	}
 
 	@Override
@@ -62,8 +61,8 @@ public class ArticoloServiceImpl implements ArticoloService {
 	}
 
 	@Override
-	public int inserisciNuovo(Articolo input) throws Exception {
-		int result = 0;
+	public Long inserisciNuovo(Articolo input) throws Exception {
+		Long result = 0L;
 		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
 			articoloDao.setConnection(connection);
 			result = articoloDao.insert(input);

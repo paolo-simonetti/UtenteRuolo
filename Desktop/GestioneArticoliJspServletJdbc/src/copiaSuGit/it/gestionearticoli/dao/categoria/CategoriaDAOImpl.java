@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.TreeSet;
 
 import it.gestionearticoli.dao.AbstractMySQLDAO;
+import it.gestionearticoli.model.Articolo;
 import it.gestionearticoli.model.Categoria;
 
 public class CategoriaDAOImpl extends AbstractMySQLDAO implements CategoriaDAO {
@@ -81,20 +82,28 @@ public class CategoriaDAOImpl extends AbstractMySQLDAO implements CategoriaDAO {
 	}
 
 	@Override
-	public int insert(Categoria input) throws Exception {
+	public Long insert(Categoria input) throws Exception {
 		if (isNotActive() || input == null) {
-			return -1;
+			return -1L;
 		}
-		int result = 0;
-		try (PreparedStatement ps = connection.prepareStatement("INSERT INTO categoria (nome_categoria) VALUES ?")) {
+		Long result = 0L;
+		try (PreparedStatement ps = connection.prepareStatement("INSERT INTO categoria (nome_categoria) "
+				+ "VALUES (?)",Statement.RETURN_GENERATED_KEYS)) {
 			ps.setString(1, input.getNomeCategoria());
-			result = ps.executeUpdate();
+			ps.executeUpdate();
+			ResultSet resultSet = ps.getGeneratedKeys();
+			if (resultSet.next()) {
+				result=resultSet.getLong(1);
+				input.setIdCategoria(result);
+			} else {
+				System.err.println("Generated Keys non trovate per insertCategoria");
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 		return result;
-
 	}
 
 	@Override
@@ -113,6 +122,43 @@ public class CategoriaDAOImpl extends AbstractMySQLDAO implements CategoriaDAO {
 			return result;
 		}
 	}
+	
+	public boolean synchroElencoArticoli(Categoria input) throws Exception {
+		if (isNotActive()||input==null) {
+			return false;
+		} else {
+			boolean esito=false;
+			Categoria categoriaTemp=null;
+			try { 
+				categoriaTemp=this.get(input.getIdCategoria());
+				if (categoriaTemp!=null) {
+					esito=true;
+					String query="SELECT * FROM articolo WHERE CATEGORIA_FK=?";
+					try(PreparedStatement preparedStatement=connection.prepareStatement(query)) {					
+						preparedStatement.setLong(1,input.getIdCategoria());
+						ResultSet resultSet=preparedStatement.executeQuery();
+						Articolo articolo=null;
+						while (resultSet.next()) {
+							articolo=new Articolo();
+							articolo.setId(resultSet.getLong("ID"));
+							articolo.setCodice(resultSet.getString("CODICE"));
+							articolo.setDescrizione(resultSet.getString("DESCRIZIONE"));
+							articolo.setPrezzo(resultSet.getInt("PREZZO"));
+							articolo.setCategoriaFK(resultSet.getLong("CATEGORIA_FK"));
+							input.incrementaElencoArticoli(articolo);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw e;
+					}					
+				}
+			} catch (Exception e) {
+				System.out.println("La categoria in input non è presente nel database!");
+				throw new NullPointerException();
+			}
+			return esito;
+		}
+	}
 
 	@Override
 	public TreeSet<Categoria> findByExample(Categoria input) throws Exception {
@@ -125,4 +171,9 @@ public class CategoriaDAOImpl extends AbstractMySQLDAO implements CategoriaDAO {
 		this.connection=connection;
 	}
 
+	@Override
+	public Connection getConnection() {
+		return connection;
+	}
+	
 }

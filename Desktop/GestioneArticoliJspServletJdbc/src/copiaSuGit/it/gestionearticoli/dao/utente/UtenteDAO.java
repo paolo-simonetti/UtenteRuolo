@@ -11,7 +11,7 @@ public interface UtenteDAO extends IBaseDAO<Utente> {
 	public TreeSet<Utente> list() throws Exception;
 	public Utente get(Long idUtente) throws Exception;
 	public int update(Utente input) throws Exception;
-	public int insert(Utente input) throws Exception;
+	public Long insert(Utente input) throws Exception;
 	public int delete(Utente input) throws Exception;
 	public TreeSet<Utente> findByExample(Utente input) throws Exception;
 	public void setConnection(Connection connection);

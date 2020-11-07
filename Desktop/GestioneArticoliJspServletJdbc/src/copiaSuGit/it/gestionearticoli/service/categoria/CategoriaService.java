@@ -11,8 +11,9 @@ public interface CategoriaService {
 	public TreeSet<Categoria> listAll() throws Exception;
 	public Categoria trovaTramiteId(Long idCategoria) throws Exception;
 	public int aggiorna(Categoria input) throws Exception;
-	public int inserisciNuovo(Categoria input) throws Exception;
+	public Long inserisciNuovo(Categoria input) throws Exception;
 	public int rimuovi(Categoria input) throws Exception;
+	public boolean sincronizzaElencoArticoli(Categoria input) throws Exception;
 	public TreeSet<Categoria> findByExample(Categoria input) throws Exception;
 
 }

@@ -12,7 +12,7 @@ public interface ArticoloService {
 	public TreeSet<Articolo> listAll() throws Exception;
 	public Articolo trovaTramiteId(Long idInput) throws Exception;
 	public int aggiorna(Articolo input) throws Exception;
-	public int inserisciNuovo(Articolo input) throws Exception;
+	public Long inserisciNuovo(Articolo input) throws Exception;
 	public int rimuovi(Articolo input) throws Exception;
 	public TreeSet<Articolo> findByExample(Articolo input) throws Exception;
 

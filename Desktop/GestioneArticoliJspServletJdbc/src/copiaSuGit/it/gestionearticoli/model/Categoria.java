@@ -40,8 +40,7 @@ public class Categoria implements Comparable<Categoria>{
 		return this.elencoArticoli.remove(articolo); // ritorna true se l'articolo era effettivamente presente nell'elenco di questa categoria
 	}
 	
-	public Categoria(Long idCategoria, String nomeCategoria) {
-		this.idCategoria = idCategoria;
+	public Categoria(String nomeCategoria) {
 		this.nomeCategoria = nomeCategoria;
 	}
 	

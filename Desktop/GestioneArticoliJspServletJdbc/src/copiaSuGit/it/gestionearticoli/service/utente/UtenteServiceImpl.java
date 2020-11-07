@@ -1,8 +1,10 @@
 package it.gestionearticoli.service.utente;
 
+import java.sql.Connection;
 import java.util.TreeSet;
 
-import it.gestionearticoli.dao.articolo.ArticoloDAO;
+import it.gestionearticoli.connection.MyConnection;
+import it.gestionearticoli.dao.Constants;
 import it.gestionearticoli.dao.utente.UtenteDAO;
 import it.gestionearticoli.model.Utente;
 
@@ -17,32 +19,67 @@ public class UtenteServiceImpl implements UtenteService {
 
 	@Override
 	public TreeSet<Utente> listAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		TreeSet<Utente> result = new TreeSet<>();
+		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+			utenteDao.setConnection(connection);
+			result = utenteDao.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
 	}
 
 	@Override
 	public Utente trovaTramiteId(Long idInput) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Utente result=new Utente();
+		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+			utenteDao.setConnection(connection);
+			result = utenteDao.get(idInput);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
 	}
 
 	@Override
 	public int aggiorna(Utente input) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=-1;
+		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+			utenteDao.setConnection(connection);
+			result = utenteDao.update(input);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
 	}
 
 	@Override
-	public int inserisciNuovo(Utente input) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public Long inserisciNuovo(Utente input) throws Exception {
+		Long result = 0L;
+		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+			utenteDao.setConnection(connection);
+			result = utenteDao.insert(input);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
 	}
 
 	@Override
 	public int rimuovi(Utente input) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=-1;
+		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+			utenteDao.setConnection(connection);
+			result = utenteDao.delete(input);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
 	}
 
 	@Override

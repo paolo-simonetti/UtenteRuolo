@@ -10,7 +10,7 @@ public interface UtenteService {
 	public TreeSet<Utente> listAll() throws Exception;
 	public Utente trovaTramiteId(Long idInput) throws Exception;
 	public int aggiorna(Utente input) throws Exception;
-	public int inserisciNuovo(Utente input) throws Exception;
+	public Long inserisciNuovo(Utente input) throws Exception;
 	public int rimuovi(Utente input) throws Exception;
 	public TreeSet<Utente> findByExample(Utente input) throws Exception;
 

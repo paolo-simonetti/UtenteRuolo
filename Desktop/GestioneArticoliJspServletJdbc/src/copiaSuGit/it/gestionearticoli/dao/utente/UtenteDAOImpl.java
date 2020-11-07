@@ -13,15 +13,49 @@ import it.gestionearticoli.model.Utente;
 public class UtenteDAOImpl extends AbstractMySQLDAO implements UtenteDAO {
 
 	@Override
-	public int insert(Utente input) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public Long insert(Utente input) throws Exception {
+		if (isNotActive() || input == null) {
+			return -1L;
+		}
+		Long result = 0L;
+		try (PreparedStatement ps = connection.prepareStatement("INSERT INTO utente (nome,cognome,codice_fiscale,username,password,ruolo) "
+				+ "VALUES (?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS)) {
+			ps.setString(1, input.getNome());
+			ps.setString(2, input.getCognome());
+			ps.setString(3, input.getCodiceFiscale());
+			ps.setString(4, input.getUsername());
+			ps.setString(5, input.getPassword());
+			ps.setString(6, input.getRuolo().toString());
+			ps.executeUpdate();
+			ResultSet resultSet = ps.getGeneratedKeys(); 
+			if (resultSet.next()) {
+				input.setIdUtente(resultSet.getLong(1));
+				result=input.getIdUtente();				
+			} else {
+				System.err.println("Generated keys non trovate per insert utente");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
 	}
 
 	@Override
 	public int delete(Utente input) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		if (isNotActive()||input==null) {
+			return -1;
+		} else {
+			int result=0;
+			String query="DELETE FROM utente WHERE id_utente=?";
+			try (PreparedStatement preparedStatement=connection.prepareStatement(query)) {
+				preparedStatement.setLong(1,input.getIdUtente());
+				result= preparedStatement.executeUpdate();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
 	}
 
 	@Override
