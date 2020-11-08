@@ -48,7 +48,7 @@ public class ExecuteInsertArticoloServlet extends HttpServlet {
 		}
 
 		//andiamo ai risultati
-		request.getRequestDispatcher("InsertResult.jsp").forward(request, response);
+		request.getRequestDispatcher("results.jsp").forward(request, response);
 
 	}
 
