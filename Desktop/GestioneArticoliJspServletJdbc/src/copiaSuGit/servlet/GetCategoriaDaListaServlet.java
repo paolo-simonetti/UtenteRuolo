@@ -22,11 +22,10 @@ public class GetCategoriaDaListaServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String stringaIdCategoriaInput=request.getParameter("idCategoria");
-		System.out.println(stringaIdCategoriaInput);
-		System.out.println(Long.parseLong(stringaIdCategoriaInput));
 		TreeSet<Articolo> articoliDiCategoriaInput=null;
+		Long idCategoria=(stringaIdCategoriaInput.isEmpty()||stringaIdCategoriaInput==null? 0L:Long.parseLong(stringaIdCategoriaInput));
 		try {
-			articoliDiCategoriaInput=MyServiceFactory.getArticoloServiceInstance().elencaArticoliCategoria(Long.parseLong(stringaIdCategoriaInput)); 
+			articoliDiCategoriaInput=MyServiceFactory.getArticoloServiceInstance().elencaArticoliCategoria(idCategoria); 
 			request.setAttribute("listaArticoliAttribute",articoliDiCategoriaInput);
 			request.getRequestDispatcher("results.jsp").forward(request,response);
 		} catch(Exception e) {

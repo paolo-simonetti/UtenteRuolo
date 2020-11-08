@@ -152,8 +152,24 @@ public class ArticoloDAOImpl extends AbstractMySQLDAO implements ArticoloDAO {
 	}
 	
 	public TreeSet<Articolo> listArticoliCategoria(Long idCategoriaInput) throws Exception {
-		if(isNotActive()||idCategoriaInput==null) {
+		if(isNotActive()) {
 			return null;
+		} else if(idCategoriaInput==0L||idCategoriaInput==null) {
+			TreeSet<Articolo> result=new TreeSet<Articolo>();
+			String query="SELECT* FROM articolo WHERE CATEGORIA_FK IS NULL";
+			try(Statement statement=connection.createStatement()) {
+				ResultSet resultSet=statement.executeQuery(query); 
+				Articolo articoloTemp=null;
+				while (resultSet.next()) {
+					articoloTemp = new Articolo();
+					articoloTemp.setCodice(resultSet.getString("CODICE"));
+					articoloTemp.setDescrizione(resultSet.getString("DESCRIZIONE"));
+					articoloTemp.setPrezzo(resultSet.getInt("PREZZO"));
+					articoloTemp.setId(resultSet.getLong("ID"));
+					result.add(articoloTemp);					
+				}
+			}
+			return result;
 		} else {
 			TreeSet<Articolo> result=new TreeSet<Articolo>();
 			String query="SELECT* FROM articolo WHERE CATEGORIA_FK=?";

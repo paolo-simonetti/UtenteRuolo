@@ -70,7 +70,11 @@ public class ExecuteInsertArticoloServlet extends HttpServlet {
 			Articolo articoloDaInserire=new Articolo(codiceInputParam,descrizioneInputParam,prezzo,null);
 			if (!categoriaIsPresente) {
 				MyServiceFactory.getArticoloServiceInstance().inserisciNuovo(articoloDaInserire);
-				request.setAttribute("alertMessage","La categoria inserita non era presente nella lista, è stata impostata a null!");
+				if (categoriaInputStringParam.isEmpty()) {
+					request.setAttribute("successMessage","Articolo aggiunto con successo!");
+				} else {
+					request.setAttribute("alertMessage","La categoria inserita non era presente nella lista, è stata impostata a null!");					
+				}
 				request.setAttribute("listaArticoliAttribute",MyServiceFactory.getArticoloServiceInstance().listAll());
 				request.getRequestDispatcher("results.jsp").forward(request,response);
 			} else {
