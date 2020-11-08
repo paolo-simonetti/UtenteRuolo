@@ -67,7 +67,7 @@
 		                        <td>
 									<a class="btn  btn-sm btn-outline-secondary" href="GetArticoloDaListaServlet?idArticoloDaVisualizzare=${item.id}">Visualizza articolo</a>
 									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareUpdateArticoloDaListaServlet?idArticoloDaAggiornare=${item.id}">Edit</a>
-									<a class="btn btn-outline-danger btn-sm" href="DeleteArticoloDaListaServlet?idArticoloDaEliminare=${item.id}">Delete</a>
+									<a class="btn btn-outline-danger btn-sm" href="PrepareDeleteArticoloDaListaServlet?idArticoloDaEliminare=${item.id}">Delete</a>
 									<a class="btn  btn-sm btn-outline-info" href="GetCategoriaDaListaServlet?idCategoria=${item.categoriaFK}">Visualizza categoria</a>
 								</td>
 		                      </tr>

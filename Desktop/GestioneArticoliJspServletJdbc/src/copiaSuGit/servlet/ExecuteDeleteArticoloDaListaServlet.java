@@ -1,6 +1,8 @@
 package it.gestionearticoli.web.servlet;
 
 import java.io.IOException;
+import java.util.TreeSet;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,14 +30,17 @@ public class ExecuteDeleteArticoloDaListaServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Articolo articolo=(Articolo)request.getAttribute("articoloDaEliminare");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		try {
+			Articolo articolo=MyServiceFactory.getArticoloServiceInstance().trovaTramiteId(Long.parseLong(request.getParameter("idArticoloDaEliminare")));
 			MyServiceFactory.getArticoloServiceInstance().rimuovi(articolo);
+			TreeSet<Articolo> articoliPresenti=MyServiceFactory.getArticoloServiceInstance().listAll();
+			request.setAttribute("listaArticoliAttribute",articoliPresenti);
+			request.setAttribute("successMessage","Articolo eliminato con successo");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
- 		request.getRequestDispatcher("ListArticoliServlet").forward(request, response);
+ 		request.getRequestDispatcher("results.jsp").forward(request, response);
 	}
 
 	/**

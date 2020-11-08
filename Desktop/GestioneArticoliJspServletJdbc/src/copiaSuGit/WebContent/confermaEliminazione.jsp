@@ -29,7 +29,7 @@
 	    <div class="container">
 	      <h1 class="display-3">Conferma eliminazione</h1>
 	      <p>Pazzo scatenato, vuoi davvero eliminare questo articolo?</p>
-	      <p><a class="btn btn-primary btn-lg" href="PrepareDeleteArticoloServlet?idArticoloDaEliminare=<%= ((Articolo)request.getAttribute("articoloDaEliminare")).getId()%>" role="button">Sei un folle &raquo;</a></p>
+	      <p><a class="btn btn-primary btn-lg" href="ExecuteDeleteArticoloDaListaServlet?idArticoloDaEliminare=${requestScope.idArticoloDaEliminare}" role="button">Sei un folle &raquo;</a></p>
 	      <p><a class="btn btn-primary btn-lg" href="ListArticoliServlet" role="button">Bravo, torna alla lista degli articoli &raquo;</a></p>
 	    </div>
 	  </div>
