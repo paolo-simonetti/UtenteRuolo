@@ -1,8 +1,9 @@
+<%@page import="it.gestionearticoli.model.Articolo"%>
 <!doctype html>
 <html lang="it">
 <head>
 	<jsp:include page="./header.jsp" />
-	<title>Aggiorna articolo</title>
+	<title>Aggiorna categoria</title>
 	
 	<!-- style per le pagine diverse dalla index -->
     <link href="./assets/css/global.css" rel="stylesheet">
@@ -23,24 +24,29 @@
 		
 		<div class='card'>
 		    <div class='card-header'>
-		        <h5>Quale articolo vuoi aggiornare?</h5> 
+		        <h5>Aggiorna categoria</h5> 
 		    </div>
 		    <div class='card-body'>
 
-					<form method="post" action="PrepareUpdateArticoloDaDropdownServlet" 
-					novalidate="novalidate">
-					
+					<form method="post" action="ExecuteUpdateCategoriaServlet" novalidate="novalidate">
+						<div>
+							<div class="form-row">
+							<div class="form-group col-md-6">
+								<label> </label>
+								<input type="hidden" name="idCategoria" id="idCategoria" class="form-control" value="${requestScope.categoriaDaAggiornare.idCategoria}">
+							</div>
+							</div>
+						</div>	
+	
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label>Id articolo </label>
-								<input type="number" name="idArticoloDaAggiornare" id="idArticoloDaAggiornare" 
-								class="form-control" placeholder="Inserire l'id dell'articolo">
-							</div>	
+								<label>Nome della categoria </label>
+								<input type="text" name="nomeCategoria" id="nomeCategoria" 
+								class="form-control" value="${requestScope.categoriaDaAggiornare.nomeCategoria}" placeholder="Inserisci una categoria...">
+							</div>
 						</div>
-													
+							
 						<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
-					
-
 					</form>
 
 		    

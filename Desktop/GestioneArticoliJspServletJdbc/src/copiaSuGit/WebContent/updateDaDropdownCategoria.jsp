@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 	<jsp:include page="./header.jsp" />
-	<title>Aggiorna articolo</title>
+	<title>Aggiorna categoria</title>
 	
 	<!-- style per le pagine diverse dalla index -->
     <link href="./assets/css/global.css" rel="stylesheet">
@@ -23,18 +23,18 @@
 		
 		<div class='card'>
 		    <div class='card-header'>
-		        <h5>Quale articolo vuoi aggiornare?</h5> 
+		        <h5>Quale categoria vuoi aggiornare?</h5> 
 		    </div>
 		    <div class='card-body'>
 
-					<form method="post" action="PrepareUpdateArticoloDaDropdownServlet" 
+					<form method="post" action="PrepareUpdateCategoriaDaDropdownServlet" 
 					novalidate="novalidate">
 					
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label>Id articolo </label>
-								<input type="number" name="idArticoloDaAggiornare" id="idArticoloDaAggiornare" 
-								class="form-control" placeholder="Inserire l'id dell'articolo">
+								<label>Id categoria </label>
+								<input type="number" name="idCategoriaDaAggiornare" id="idCategoriaDaAggiornare" 
+								class="form-control" placeholder="Inserire l'id della categoria">
 							</div>	
 						</div>
 													
