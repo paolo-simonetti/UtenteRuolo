@@ -30,6 +30,7 @@ public class ExecuteUpdateArticoloDaListaServlet extends HttpServlet {
 		String descrizioneInput=request.getParameter("descrizione");
 		String prezzoStringaInput=request.getParameter("prezzo");
 		String categoriaStringaInput=request.getParameter("categoria");
+		Long categoriaFK=(categoriaStringaInput.isEmpty()? 0:Long.parseLong(categoriaStringaInput));
 		int prezzo=Integer.parseInt(prezzoStringaInput);
 		if (codiceInput.isEmpty()) {
 			request.setAttribute("errorMessage", "Attenzione: sono presenti errori di validazione");
@@ -67,24 +68,33 @@ public class ExecuteUpdateArticoloDaListaServlet extends HttpServlet {
 			request.setAttribute("articoloDaAggiornare",articolo);
 			request.getRequestDispatcher("update.jsp").forward(request, response);
 			return;
+		} else if(categoriaFK<1) {
+			request.setAttribute("errorMessage", "Attenzione: sono presenti errori di validazione");
+			Articolo articolo=new Articolo();
+			try {
+				articolo=MyServiceFactory.getArticoloServiceInstance().trovaTramiteId(idInput);				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			request.setAttribute("articoloDaAggiornare",articolo);
+			request.getRequestDispatcher("update.jsp").forward(request, response);
+			return;
 		}
 		// controllo se la categoria impostata è presente
 		TreeSet<Articolo> articoliPresenti=new TreeSet<>();
 		try {
 			TreeSet<Categoria> categoriePresenti=MyServiceFactory.getCategoriaServiceInstance().listAll();
 			boolean categoriaIsPresente=false;
-			Long idCategoria=null;
 			for (Categoria c:categoriePresenti) {
-				if (categoriaStringaInput.equals(c.getNomeCategoria())) {
+				if (categoriaFK==c.getIdCategoria()) {
 					categoriaIsPresente=true;
-					idCategoria=c.getIdCategoria();
 					break;
 				}
 			}
 			Articolo articolo=new Articolo(codiceInput,descrizioneInput,prezzo,null);
 			articolo.setId(idInput);
 			if (categoriaIsPresente) {
-				articolo.setCategoriaFK(idCategoria);
+				articolo.setCategoriaFK(categoriaFK);
 				MyServiceFactory.getArticoloServiceInstance().aggiorna(articolo);
 				request.setAttribute("successMessage", "Operazione effettuata con successo");
 				articoliPresenti=MyServiceFactory.getArticoloServiceInstance().listAll();

@@ -47,8 +47,8 @@
 		                        <td><c:out value="${item.idCategoria}"></c:out></td>
 		                        <td><c:out value="${item.nomeCategoria}"></c:out></td>
 		                        <td>
-									<a class="btn  btn-sm btn-outline-secondary" href="GetCategoriaDaLista?idCategoria=${item.idCategoria}">Visualizza articoli afferenti</a>
-									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareUpdateCategoriaDaLista?idCategoria=${item.idCategoria}">Modifica</a>
+									<a class="btn  btn-sm btn-outline-secondary" href="GetCategoriaDaListaServlet?idCategoria=${item.idCategoria}">Visualizza articoli afferenti</a>
+									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareUpdateCategoriaDaListaServlet?idCategoria=${item.idCategoria}">Modifica</a>
 									<a class="btn btn-outline-danger btn-sm" href="PrepareDeleteCategoriaServlet?idCategoria=${item.idCategoria}">Elimina</a>
 								</td>
 		                      </tr>
