@@ -30,8 +30,8 @@
 		    <span aria-hidden="true">&times;</span>
 		  </button>
 		</div>
-		<div class="alert alert-info alert-dismissible fade show d-none" role="alert">
-		  Aggiungere d-none nelle class per non far apparire
+		<div class="alert alert-warning alert-dismissible fade show ${alertMessage==null?'d-none': ''}" role="alert">
+		  ${alertMessage}
 		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		    <span aria-hidden="true">&times;</span>
 		  </button>
@@ -52,6 +52,7 @@
 		                        <th>Codice</th>
 		                        <th>Descrizione</th>
 		                        <th>Prezzo</th>
+		                        <th>Categoria</th>
 		                        <th>Azioni</th>
 		                    </tr>
 		                </thead>
@@ -62,10 +63,12 @@
 		                        <td><c:out value="${item.codice}"></c:out></td>
 		                        <td><c:out value="${item.descrizione}"></c:out></td>
 		                        <td><c:out value="${item.prezzo}"></c:out></td>
+		                        <td><c:out value="${item.categoriaFK}"></c:out></td>
 		                        <td>
-									<a class="btn  btn-sm btn-outline-secondary" href="PrepareGetArticoloDaLista">Visualizza</a>
+									<a class="btn  btn-sm btn-outline-secondary" href="PrepareGetArticoloDaLista">Visualizza articolo</a>
 									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareUpdateArticoloDaLista">Edit</a>
 									<a class="btn btn-outline-danger btn-sm" href="PrepareDeleteArticoloServlet">Delete</a>
+									<a class="btn  btn-sm btn-outline-info" href="GetCategoriaDaLista?idCategoria=${item.categoriaFK}">Visualizza categoria</a>
 								</td>
 		                      </tr>
 		                	</c:forEach>		                   

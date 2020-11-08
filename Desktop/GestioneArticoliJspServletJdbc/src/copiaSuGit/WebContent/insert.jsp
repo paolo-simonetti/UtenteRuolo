@@ -37,8 +37,7 @@
 					<h6 class="card-title">I campi con <span class="text-danger">*</span> 
 					sono obbligatori</h6>
 
-					<form method="post" action="ExecuteInsertArticoloServlet" 
-					novalidate="novalidate">
+					<form method="post" action="ExecuteInsertArticoloServlet" novalidate="novalidate">
 					
 						<div class="form-row">
 							<div class="form-group col-md-6">
@@ -57,9 +56,13 @@
 							<div class="form-group col-md-3">
 								<label>Prezzo <span class="text-danger">*</span></label>
 								<input type="number" class="form-control" name="prezzo" id="prezzo" placeholder="Inserire prezzo" required>
+							</div>		
+							<div class="form-group col-md-6">
+								<label>Categoria</label>
+								<input type="text" name="categoria" id="categoria" class="form-control" placeholder="Inserire la categoria cui afferisce l'articolo">
 							</div>
-							
 						</div>
+	
 							
 						<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
 					
