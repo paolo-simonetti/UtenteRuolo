@@ -65,10 +65,10 @@
 		                        <td><c:out value="${item.prezzo}"></c:out></td>
 		                        <td><c:out value="${item.categoriaFK}"></c:out></td>
 		                        <td>
-									<a class="btn  btn-sm btn-outline-secondary" href="PrepareGetArticoloDaLista">Visualizza articolo</a>
-									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareUpdateArticoloDaLista">Edit</a>
-									<a class="btn btn-outline-danger btn-sm" href="PrepareDeleteArticoloServlet">Delete</a>
-									<a class="btn  btn-sm btn-outline-info" href="GetCategoriaDaLista?idCategoria=${item.categoriaFK}">Visualizza categoria</a>
+									<a class="btn  btn-sm btn-outline-secondary" href="GetArticoloDaListaServlet?idArticoloDaVisualizzare=${item.id}">Visualizza articolo</a>
+									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareUpdateArticoloDaListaServlet?idArticoloDaAggiornare=${item.id}">Edit</a>
+									<a class="btn btn-outline-danger btn-sm" href="DeleteArticoloDaListaServlet?idArticoloDaEliminare=${item.id}">Delete</a>
+									<a class="btn  btn-sm btn-outline-info" href="GetCategoriaDaListaServlet?idCategoria=${item.categoriaFK}">Visualizza categoria</a>
 								</td>
 		                      </tr>
 		                	</c:forEach>		                   

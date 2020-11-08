@@ -3,7 +3,7 @@
 <html lang="it">
 <head>
 	<jsp:include page="./header.jsp" />
-	<title>Inserisci nuovo</title>
+	<title>Aggiorna articolo</title>
 	
 	<!-- style per le pagine diverse dalla index -->
     <link href="./assets/css/global.css" rel="stylesheet">
@@ -13,14 +13,7 @@
 	<jsp:include page="./navbar.jsp" />
 	
 	<main role="main" class="container">
-	
-		<div class="alert alert-danger alert-dismissible fade show d-none" role="alert">
-			 	Operazione fallita!
-			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			    <span aria-hidden="true">&times;</span>
-			  </button>
-		</div>
-		
+			
 		<div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none': 
 		''}" role="alert">
 		  ${errorMessage}
@@ -31,7 +24,7 @@
 		
 		<div class='card'>
 		    <div class='card-header'>
-		        <h5>Inserisci nuovo elemento</h5> 
+		        <h5>Aggiorna articolo</h5> 
 		    </div>
 		    <div class='card-body'>
 
@@ -44,31 +37,34 @@
 							<div class="form-row">
 							<div class="form-group col-md-6">
 								<label> </label>
-								<input type="hidden" name="idArticolo" id="idArticolo" class="form-control" value=<%=((Articolo)request.getAttribute("articoloDaAggiornare")).getId() %> >
+								<input type="hidden" name="idArticolo" id="idArticolo" class="form-control" value="${requestScope.articoloDaAggiornare.id}">
 							</div>
 							</div>
 						</div>	
-						
 	
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label>Codice <span class="text-danger">*</span></label>
 								<input type="text" name="codice" id="codice" 
-								class="form-control" value="<%=((Articolo)request.getAttribute("articoloDaAggiornare")).getCodice()%>" placeholder="Inserisci un codice..." required>
+								class="form-control" value="${requestScope.articoloDaAggiornare.codice}" placeholder="Inserisci un codice..." required>
 							</div>
 							
 							<div class="form-group col-md-6">
 								<label>Descrizione <span class="text-danger">*</span></label>
-								<input type="text" name="descrizione" id="descrizione" class="form-control" value="<%=((Articolo)request.getAttribute("articoloDaAggiornare")).getDescrizione()%>" placeholder="Inserisci una descrizione..." required>
+								<input type="text" name="descrizione" id="descrizione" class="form-control" value="${requestScope.articoloDaAggiornare.descrizione}" placeholder="Inserisci una descrizione..." required>
 							</div>
 						</div>
 						
 						<div class="form-row">	
 							<div class="form-group col-md-3">
 								<label>Prezzo <span class="text-danger">*</span></label>
-								<input type="number" class="form-control" name="prezzo" id="prezzo" value=<%=((Articolo)request.getAttribute("articoloDaAggiornare")).getPrezzo() %> placeholder="Inserisci un prezzo..." required>
+								<input type="number" class="form-control" name="prezzo" id="prezzo" value="${requestScope.articoloDaAggiornare.prezzo}" placeholder="Inserisci un prezzo..." required>
 							</div>
 							
+							<div class="form-group col-md-3">
+								<label>Categoria </label>
+								<input type="text" class="form-control" name="categoria" id="categoria" value="${requestScope.articoloDaAggiornare.categoriaFK}" placeholder="Inserisci la categoria di afferenza">
+							</div>
 						</div>
 							
 						<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
