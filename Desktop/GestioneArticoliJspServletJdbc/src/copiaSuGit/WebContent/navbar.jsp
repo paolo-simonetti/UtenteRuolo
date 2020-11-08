@@ -21,9 +21,9 @@
         <div class="dropdown-menu" aria-labelledby="dropdown01">
           <a class="dropdown-item" href="ListArticoliServlet">Elenco articoli</a>
           <a class="dropdown-item" href="insert.jsp">Inserisci nuovo articolo</a>
-          <a class="dropdown-item" href="updateDaDropdown.jsp">Aggiorna articolo</a>
-          <a class="dropdown-item" href="deleteDaDropdown.jsp">Elimina articolo</a>
-          <a class="dropdown-item" href="getDaDropdown.jsp">Visualizza articolo</a>
+          <a class="dropdown-item" href="updateDaDropdownArticolo.jsp">Aggiorna articolo</a>
+          <a class="dropdown-item" href="deleteDaDropdownArticolo.jsp">Elimina articolo</a>
+          <a class="dropdown-item" href="getDaDropdownArticolo.jsp">Visualizza articolo</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -32,7 +32,7 @@
           <a class="dropdown-item" href="ListCategorieServlet">Elenco categorie</a> 
           <a class="dropdown-item" href="insertCategoria.jsp">Inserisci nuova categoria</a>
           <a class="dropdown-item" href="updateDaDropdownCategoria.jsp">Aggiorna categoria</a>
-          <a class="dropdown-item" href="deleteDaDropdowncategoria.jsp">Elimina categoria</a>
+          <a class="dropdown-item" href="deleteDaDropdownCategoria.jsp">Elimina categoria</a>
           <a class="dropdown-item" href="getDaDropdownCategoria.jsp">Visualizza una categoria specifica</a>
         </div>
       </li>
